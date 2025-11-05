@@ -5,40 +5,13 @@ import {
 import { ProductsService, UsersService } from "../services";
 import z from "zod";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { Order, orders, Product, products, users } from "../data/data";
+import { orders, users } from "../data/data";
+import {
+  mapRawOrdersToStructured,
+  mapRawProductsToStructured,
+} from "../utils/mcp-utilis";
 
 // const APP_BaseURL = 'http://localhost:3000/api';
-
-export function mapRawOrdersToStructured(orders: Order[]): {
-  orderId: number;
-  products: z.infer<typeof ProductSchema>[];
-}[] {
-  return orders.map((order) => ({
-    orderId: order.id,
-    products: order.products.map((product) => {
-      const productInfo = products.find((p) => p.id === product.productId);
-      return {
-        id: productInfo?.id,
-        name: productInfo?.name,
-        price: productInfo?.price,
-        quantity: product.quantity,
-        totalPrice: productInfo ? productInfo.price * product.quantity : 0,
-      } as z.infer<typeof ProductSchema>;
-    }),
-  }));
-}
-
-export function mapRawProductsToStructured(
-  products: Product[],
-): z.infer<typeof ProductSchema>[] {
-  return products.map((product) => ({
-    id: product.id,
-    name: product.name,
-    price: product.price,
-    quantity: 0,
-    totalPrice: 0,
-  }));
-}
 
 const ProductSchema = z.object({
   id: z.number(),
@@ -47,6 +20,7 @@ const ProductSchema = z.object({
   quantity: z.number(),
   totalPrice: z.number(),
 });
+export type ProductStructured = z.infer<typeof ProductSchema>;
 
 export const mcpServer = new McpServer({
   name: "ecommerce-mcp-server",
