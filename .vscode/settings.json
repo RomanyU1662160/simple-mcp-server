@@ -1,0 +1,7 @@
+{
+  "chat.mcp.serverSampling": {
+    "MCP/.vscode/mcp.json: test-my-mcp-server": {
+      "allowedModels": ["copilot/gpt-5-mini", "copilot/auto"]
+    }
+  }
+}

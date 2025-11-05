@@ -1,0 +1,44 @@
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://lefthook.dev/configuration/
+#
+# lefthook.yml
+# Configuration reference: https://lefthook.dev/configuration/
+
+assert_lefthook_installed: true
+
+output:
+  - meta # Print lefthook version
+  - summary # Print summary block (successful and failed steps)
+  - empty_summary # Print summary heading when there are no steps to run
+  - success # Print successful steps
+  - failure # Print failed steps printing
+  - execution # Print any execution logs (but prints if the execution failed)
+  - execution_out # Print execution output (but still prints failed commands output)
+  - execution_info # Print `EXECUTE > ...` logging
+  - skips # Print "skip" (i.e. no files matched)
+
+pre-commit:
+  parallel: true # run tasks side-by-side for speed
+  commands:
+    eslint:
+      glob: "*.{js,ts,jsx,tsx}"
+      run: npx eslint {staged_files}
+    prettier:
+      glob: "*.{js,ts,jsx,tsx,json,md,yml}"
+      run: npx prettier --check {staged_files}
+    typescript:
+      glob: "*.{ts,tsx}"
+      run: npx --no-install tsc --noEmit
+
+commit-msg:
+  commands:
+    commitlint:
+      run: npx --no-install commitlint --edit {1}
+
+pre-push:
+  parallel: true
+  commands:
+    audit:
+      run: npm audit --production

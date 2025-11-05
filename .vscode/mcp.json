@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "test-my-mcp-server": {
+      "type": "stdio",
+      "cwd": "${workspaceFolder}",
+      "command": "npx",
+      "args": ["tsx", "src/mcp-standalone.ts"]
+    }
+  },
+  "inputs": []
+}
