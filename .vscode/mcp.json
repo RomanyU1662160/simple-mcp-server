@@ -3,8 +3,8 @@
     "test-my-mcp-server": {
       "type": "stdio",
       "cwd": "${workspaceFolder}",
-      "args": ["tsx", "src/mcp-standalone.ts"],
-      "command": "npx"
+      "command": "npx",
+      "args": ["tsx", "src/mcp-standalone.ts"]
     }
   },
   "inputs": []
