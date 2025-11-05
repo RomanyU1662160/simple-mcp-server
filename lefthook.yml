@@ -41,4 +41,4 @@ pre-push:
   parallel: true
   commands:
     audit:
-      run: npm audit --production
+      run: pnpm audit --production
